@@ -1,10 +1,10 @@
 package win.minaandyyh.sparrow.metadata;
 
-import win.minaandyyh.sparrow.annotation.Body;
-import win.minaandyyh.sparrow.annotation.Cookie;
-import win.minaandyyh.sparrow.annotation.Header;
-import win.minaandyyh.sparrow.annotation.Param;
-import win.minaandyyh.sparrow.annotation.UrlVariable;
+import win.minaandyyh.sparrow.annotation.param.Body;
+import win.minaandyyh.sparrow.annotation.param.Cookie;
+import win.minaandyyh.sparrow.annotation.param.Header;
+import win.minaandyyh.sparrow.annotation.param.Param;
+import win.minaandyyh.sparrow.annotation.param.UrlVariable;
 
 import java.lang.reflect.Parameter;
 import java.util.concurrent.locks.Lock;

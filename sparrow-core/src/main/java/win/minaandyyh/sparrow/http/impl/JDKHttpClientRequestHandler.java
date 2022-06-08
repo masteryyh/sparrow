@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
+import win.minaandyyh.sparrow.MediaType;
+import win.minaandyyh.sparrow.RequestMethod;
+import win.minaandyyh.sparrow.constant.Constant;
 import win.minaandyyh.sparrow.http.AbstractRequestHandler;
 import win.minaandyyh.sparrow.http.RequestHandler;
 import win.minaandyyh.sparrow.http.RequestObject;
@@ -24,10 +27,6 @@ import java.util.Map;
  */
 public final class JDKHttpClientRequestHandler extends AbstractRequestHandler implements RequestHandler {
     private final HttpClient client;
-
-    private static final String ACCEPT = "Accept";
-
-    private static final String CONTENT_TYPE = "Content-Type";
 
     public static JDKHttpClientRequestHandler defaultHandler() {
         return new JDKHttpClientRequestHandler(HttpClient.newHttpClient());
@@ -51,34 +50,38 @@ public final class JDKHttpClientRequestHandler extends AbstractRequestHandler im
             return new JDKHttpClientRequestHandler(client);
         }
     }
-
+    
+    private void prepareRequest(String content, RequestMethod method, MediaType mediaType, HttpRequest.Builder builder) {
+        HttpRequest.BodyPublisher body;
+        if (StringUtils.isEmpty(content)) {
+            body = HttpRequest.BodyPublishers.noBody();
+        } else {
+            body = HttpRequest.BodyPublishers.ofString(content);
+        }
+        switch (method) {
+            case GET -> builder.GET();
+            case POST -> builder.POST(body)
+                    .header(Constant.CONTENT_TYPE, mediaType.getValue());
+            case PATCH -> builder.method("PATCH", body)
+                    .header(Constant.CONTENT_TYPE, mediaType.getValue());
+            case PUT -> builder.PUT(body)
+                    .header(Constant.CONTENT_TYPE, mediaType.getValue());
+            case DELETE -> builder.method("DELETE", body)
+                    .header(Constant.CONTENT_TYPE, mediaType.getValue());
+        }
+    }
+    
     @Override
     public ResponseObject request(RequestObject requestObject) throws Exception {
         if (client == null) {
             throw new IllegalStateException("HttpClient object not set.");
         }
 
-        String url = requestObject.url() + parseParam(requestObject.params());
-        url = renderUrl(url, requestObject.urlVariables());
+        String url = prepareUrl(requestObject.url(), requestObject.params(), requestObject.urlVariables());
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder(URI.create(url))
-                .header(ACCEPT, requestObject.consumes().getValue());
-        HttpRequest.BodyPublisher body;
-        if (StringUtils.isEmpty(requestObject.body())) {
-            body = HttpRequest.BodyPublishers.noBody();
-        } else {
-            body = HttpRequest.BodyPublishers.ofString(requestObject.body());
-        }
-        switch (requestObject.method()) {
-            case GET -> requestBuilder.GET();
-            case POST -> requestBuilder.POST(body)
-                    .header(CONTENT_TYPE, requestObject.produces().getValue());
-            case PATCH -> requestBuilder.method("PATCH", body)
-                    .header(CONTENT_TYPE, requestObject.produces().getValue());
-            case PUT -> requestBuilder.PUT(body)
-                    .header(CONTENT_TYPE, requestObject.produces().getValue());
-            case DELETE -> requestBuilder.method("DELETE", body)
-                    .header(CONTENT_TYPE, requestObject.produces().getValue());
-        }
+                .header(Constant.ACCEPT, requestObject.produces().getValue());
+        prepareRequest(requestObject.body(), requestObject.method(), requestObject.consumes(), requestBuilder);
+        
         Map<String, String> headers = toRawHeaders(integrateHeader(requestObject.headers(), requestObject.cookies()));
         headers.forEach(requestBuilder::header);
 

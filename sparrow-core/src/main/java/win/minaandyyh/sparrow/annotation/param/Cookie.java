@@ -1,4 +1,4 @@
-package win.minaandyyh.sparrow.annotation;
+package win.minaandyyh.sparrow.annotation.param;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,13 +7,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicate an annotated method parameter is a variable inside request url
+ * Indicate an annotated method parameter is a Cookie
  *
  * @author masteryyh
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface UrlVariable {
+public @interface Cookie {
     String name();
 }

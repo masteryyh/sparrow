@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 public @interface Patch {
     String path() default StringUtils.EMPTY;
 
-    MediaType consumes() default MediaType.APPLICATION_JSON;
+    MediaType consumes() default MediaType.WILDCARD;
 
-    MediaType produces() default MediaType.TEXT_PLAIN;
+    MediaType produces();
 }

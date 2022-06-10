@@ -11,6 +11,7 @@
     <modules>
         <module>sparrow-core</module>
         <module>sparrow-jackson-codec</module>
+        <module>sparrow-okhttp</module>
     </modules>
 
     <properties>

@@ -1,4 +1,4 @@
-package win.minaandyyh.sparrow.codec.jackson;
+package win.minaandyyh.sparrow.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import win.minaandyyh.sparrow.codec.Decoder;

@@ -4,14 +4,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.util.regex.Pattern;
 
 /**
  * Abstract HTTP request handler
@@ -41,13 +38,6 @@ public abstract class AbstractRequestHandler implements RequestHandler {
         }
 
         return joiner.toString();
-    }
-
-    protected String urlEncode(String value) {
-        if (StringUtils.isEmpty(value)) {
-            return StringUtils.EMPTY;
-        }
-        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 
     protected Map<String, List<String>> integrateHeader(Map<String, List<String>> headers, Map<String, List<String>> cookies) {
@@ -89,6 +79,13 @@ public abstract class AbstractRequestHandler implements RequestHandler {
             url = url.replaceAll("\\{" + name + "}", value);
         }
         return url;
+    }
+
+    protected String prepareUrl(String url, Map<String, List<String>> params, Map<String, String> urlVariables) {
+        if (StringUtils.isBlank(url)) {
+            throw new IllegalArgumentException("Base URL is empty.");
+        }
+        return renderUrl(url, urlVariables) + parseParam(params);
     }
 
     protected Map<String, String> toRawHeaders(Map<String, List<String>> headers) {

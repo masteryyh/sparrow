@@ -22,5 +22,5 @@ public @interface Post {
 
     MediaType consumes() default MediaType.WILDCARD;
 
-    MediaType produces() default MediaType.WILDCARD;
+    MediaType produces();
 }

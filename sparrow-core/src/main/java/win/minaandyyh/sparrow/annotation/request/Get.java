@@ -20,5 +20,5 @@ import java.lang.annotation.Target;
 public @interface Get {
     String path() default StringUtils.EMPTY;
 
-    MediaType produces() default MediaType.WILDCARD;
+    MediaType produces();
 }

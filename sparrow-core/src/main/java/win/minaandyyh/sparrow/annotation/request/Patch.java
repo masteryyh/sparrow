@@ -22,5 +22,5 @@ public @interface Patch {
 
     MediaType consumes() default MediaType.WILDCARD;
 
-    MediaType produces() default MediaType.WILDCARD;
+    MediaType produces();
 }

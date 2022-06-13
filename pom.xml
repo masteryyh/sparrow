@@ -13,6 +13,8 @@
         <module>sparrow-jackson-codec</module>
         <module>sparrow-okhttp</module>
         <module>sparrow-spring</module>
+        <module>sparrow-spring-boot-autoconfigure</module>
+        <module>sparrow-spring-boot-starter</module>
     </modules>
 
     <properties>

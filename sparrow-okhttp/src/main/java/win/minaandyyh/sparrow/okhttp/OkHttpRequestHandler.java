@@ -52,6 +52,10 @@ public class OkHttpRequestHandler extends AbstractRequestHandler implements Requ
         }
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     private void prepareRequest(String content, RequestMethod method, MediaType mediaType, Request.Builder builder) {
         RequestBody body;
         if (StringUtils.isEmpty(content)) {

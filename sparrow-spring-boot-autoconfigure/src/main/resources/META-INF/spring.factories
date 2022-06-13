@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  win.minaandyyh.sparrow.springboot.autoconfigure.DefaultMechanismAutoConfiguration,\
+  win.minaandyyh.sparrow.springboot.autoconfigure.SparrowAutoConfiguration

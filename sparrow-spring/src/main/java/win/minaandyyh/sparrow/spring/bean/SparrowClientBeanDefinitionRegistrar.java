@@ -1,5 +1,6 @@
 package win.minaandyyh.sparrow.spring.bean;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -36,6 +37,15 @@ public class SparrowClientBeanDefinitionRegistrar implements ImportBeanDefinitio
                 .fromMap(importingClassMetadata.getAnnotationAttributes(ENABLE_SPARROW_ANNOTATION));
         if (attributes != null) {
             basePackages = attributes.getStringArray("value");
+            if (ArrayUtils.isEmpty(basePackages)) {
+                String className = importingClassMetadata.getClassName();
+                try {
+                    Class<?> annotatedClass = Class.forName(className);
+                    basePackages = new String[]{annotatedClass.getPackageName()};
+                } catch (ClassNotFoundException e) {
+                    throw new IllegalStateException("Cannot load annotated class " + className + ".");
+                }
+            }
         }
 
         List<Class<?>> classes = new ArrayList<>();

@@ -1,12 +1,8 @@
 ## Sparrow HTTP Client
 
----
-
 An modular, easy-to-use HTTP client inspired by Openfeign/feign.
 
 ## Quick Start
-
----
 
 ### Spring Boot Starter
 1. Add Spring Boot Starter dependency
@@ -130,7 +126,5 @@ public class SomeAwesomeClass {
 ```
 
 ## License
-
----
 
 This project is licensed under the [Apache License, Version 2.0](https://raw.githubusercontent.com/masteryyh/sparrow/main/LICENSE)

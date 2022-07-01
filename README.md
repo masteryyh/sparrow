@@ -127,4 +127,18 @@ public class SomeAwesomeClass {
 
 ## License
 
-This project is licensed under the [Apache License, Version 2.0](https://raw.githubusercontent.com/masteryyh/sparrow/main/LICENSE)
+This project is licensed under the [Apache License, Version 2.0](https://raw.githubusercontent.com/masteryyh/sparrow/main/LICENSE).
+
+## Roadmap
+
+### Currently WIP
+
+- Add `java.util.Optional` support for better null-safe capability.
+- Refactor request object process chain for better usage.
+
+### What's up next
+
+- Add logging and error handling capabilities.
+- Comply with IETF standards.
+- Integrate with Spring Cloud framework to enable microservices RPC capabilities.
+- Integrate with Spring Data for better paging capabilities.
